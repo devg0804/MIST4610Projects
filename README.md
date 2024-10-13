@@ -41,11 +41,31 @@ Explanation of Data Model
 
 1. Which movies have an average rating above 7? 
 
+SELECT movie.genre, AVG(reviewScore)   
+FROM review   
+JOIN movie ON movie.idmovie = review.idmovie   
+GROUP BY movie.genre   
+HAVING AVG(reviewScore) > 7   
+ORDER BY AVG(reviewScore) DESC; 
+
+![Screenshot 2024-10-13 174226](https://github.com/user-attachments/assets/8f2be987-229e-46fd-8984-0edf79e93639)
+
+
 Justification:  
 
 This query helps managers identify high-performing genres that consistently receive favorable audience reviews. It can inform decisions on what types of movies studios should produce more frequently. 
 
 2. Select the names of movies where the number of tickets sold is higher than the average of movies in North America.
+
+SELECT title, TicketsSold   
+FROM box_office   
+JOIN movie ON movie.idmovie = box_office.idmovie   
+WHERE TicketsSold >   
+(SELECT AVG(TicketsSold) FROM box_office WHERE region = "North America")   
+AND region = "North America";  
+
+![Screenshot 2024-10-13 174349](https://github.com/user-attachments/assets/e57bdbfa-3e77-47ca-bfa5-c0c1d3969ee0)
+
 
 Justification: 
 
@@ -53,11 +73,29 @@ This query provides insights into which movies are outperforming in a key market
 
 3. Which studios have won at least 3 Academy Awards for their movies?
 
+SELECT COUNT(awardName) AS `number of awards`, studio.name   
+FROM studio   
+JOIN movie ON studio.idstudio = movie.idstudio   
+JOIN awards ON awards.idmovie = movie.idmovie   
+WHERE awardName REGEXP "Academy Award"   
+GROUP BY studio.idstudio   
+HAVING COUNT(awardName) >= 3;  
+
+![Screenshot 2024-10-13 174455](https://github.com/user-attachments/assets/e6f2cac9-8ec9-4726-be8e-24a649b7f53a)
+
 Justification: 
 
 Tracking which studios have consistently won prestigious awards is valuable for partnerships and investment decisions. Only including movies that have won at least 3 times filters results to only show studios that have a proven track record of success. 
 
 4. List movies, their release year, and their director if the movie has no awards, ordered by release year.
+
+SELECT title, name, releaseYear   
+FROM movie   
+JOIN director ON director.iddirector = movie.iddirector   
+WHERE NOT EXISTS (SELECT * FROM awards WHERE movie.idmovie = awards.idmovie)   
+ORDER BY releaseYear DESC;  
+
+![Screenshot 2024-10-13 174942](https://github.com/user-attachments/assets/670500bd-2c3a-4235-8b0b-319ac5411ccc)
 
 Justification: 
 
@@ -65,11 +103,30 @@ Identifying movies without awards can help managers evaluate underappreciated fi
 
 5. Which actor has appeared in the most award-winning movies? 
 
+SELECT Actor.idActor, name, COUNT(DISTINCT awards.idmovie) AS `Number of Award-Winning Movies`   
+FROM Actor   
+JOIN awards ON Actor.idActor = awards.idActor   
+JOIN Movie_Actor ON Actor.idActor = Movie_Actor.idActor   
+GROUP BY Actor.idActor, name   
+ORDER BY COUNT(DISTINCT awards.idmovie) DESC; 
+
+![Screenshot 2024-10-13 174923](https://github.com/user-attachments/assets/d81dc896-a22d-40ef-90bf-fd9f1ccf0877)
+
 Justification: 
 
 This query helps managers identify actors who consistently contribute to award-winning films, which can inform casting decisions. 
 
 6. Which directors are the most successful based on revenue and number of movies directed?
+
+SELECT director.name, COUNT(title) AS `number of movies directed`, SUM(box_office.revenue) AS `total revenue`   
+FROM director   
+JOIN movie ON movie.iddirector = director.iddirector   
+JOIN box_office ON box_office.idmovie = movie.idmovie   
+GROUP BY director.iddirector   
+ORDER BY `total revenue` DESC, `number of movies directed`;  
+
+![Screenshot 2024-10-13 174907](https://github.com/user-attachments/assets/af2c08e8-25e8-4fd5-bceb-e9157d8742fd)
+
 
 Justification: 
 
@@ -77,11 +134,32 @@ Tracking the most financially successful directors helps in strategic planning f
 
 7. Select the release year, number of movies produced that year, and total revenue for those movies (only for movies over 2 hours, rated above 7, released post-2009). 
 
+SELECT releaseYear, COUNT(*), SUM(revenue)   
+FROM movie   
+JOIN box_office ON movie.idmovie = box_office.idmovie   
+WHERE rating > 7   
+AND duration > 120   
+GROUP BY releaseYear   
+HAVING releaseYear > 2009   
+ORDER BY releaseYear;
+
+![Screenshot 2024-10-13 174827](https://github.com/user-attachments/assets/259b5cc6-6ebf-4788-a305-efe33ea58378)
+
 Justification: 
 
 This query helps managers analyze the performance of high-quality, long-duration movies in the past decade, allowing for data-driven future investments.
 
 8. Which actors appear in movies with average box office revenue higher than the overall average?
+
+SELECT Actor.idActor, name, AVG(revenue) AS `Average Box Office Revenue`   
+FROM Actor   
+JOIN Movie_Actor ON Actor.idActor = Movie_Actor.idActor   
+JOIN box_office ON Movie_Actor.idmovie = box_office.idmovie   
+GROUP BY Actor.idActor, name   
+HAVING AVG(revenue) > (SELECT AVG(revenue) FROM box_office)   
+ORDER BY AVG(revenue) DESC;  
+
+![Screenshot 2024-10-13 174811](https://github.com/user-attachments/assets/eff40b86-f438-463d-aa53-6a655b44497e)
 
 Justification: 
 
@@ -89,11 +167,29 @@ Identifying actors associated with high-revenue films helps managers make more s
 
 9. At which times do movies sell the most tickets? 
 
+SELECT time, theaterLocation, title, date, ticketSales   
+FROM movie_screening   
+JOIN movie ON movie.idmovie = movie_screening.idmovie   
+ORDER BY ticketSales DESC; 
+
+![Screenshot 2024-10-13 174748](https://github.com/user-attachments/assets/3a5dd2cb-2bd4-40dc-a1ec-8bd253d2460a)
+
 Justification: 
 
 Knowing when movies perform best can guide theaters in scheduling showtimes to maximize sales and profit. 
 
 10. Which genre has the most movies with a box office revenue above the average?
+
+select genreName, count(*) as `number of movies` 
+from genre 
+join movie on genre.idgenre = movie.idgenre 
+join box_office on movie.idmovie = box_office.idmovie 
+where revenue >  
+(select avg(revenue) from box_office) 
+group by genreName 
+order by count(*) desc; 
+
+![Screenshot 2024-10-13 174728](https://github.com/user-attachments/assets/9eed38a3-7f05-4e66-bd1b-c02255a0d6cc)
 
 Justification: 
 
