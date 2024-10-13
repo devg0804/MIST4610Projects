@@ -11,7 +11,7 @@ Project Data will go here
 2. Colby Love
 3. Dev Gajera
 4. Grayson Duckworth
-5. Brooke Soto
+5. Brooke Soto [@3rooke15](https://github.com/3rooke15)
 
 # Problem Description
 
