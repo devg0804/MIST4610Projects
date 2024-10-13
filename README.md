@@ -9,7 +9,7 @@ Project Data will go here
 
 1. Bridger Putzer [@bputzer](https://github.com/bputzer?tab=overview&from=2024-10-01&to=2024-10-13)
 2. Colby Love [@ColbyMIST](https://github.com/ColbyMIST)
-3. Dev Gajera
+3. Dev Gajera [grayson-duck](https://github.com/grayson-duck)
 4. Grayson Duckworth
 5. Brooke Soto [@3rooke15](https://github.com/3rooke15)
 
