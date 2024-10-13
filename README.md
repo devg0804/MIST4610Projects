@@ -7,7 +7,7 @@ Project Data will go here
 
 # Team Members
 
-1. Bridger Putzer
+1. Bridger Putzer @bputzer
 2. Colby Love
 3. Dev Gajera
 4. Grayson Duckworth
