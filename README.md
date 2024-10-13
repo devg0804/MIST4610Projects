@@ -1,6 +1,3 @@
-# MIST4610Projects
-Project Data will go here
-
 # Querey Works MIST 4610 Project 1
 
 
