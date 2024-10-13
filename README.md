@@ -20,6 +20,18 @@ The moveie class is connected to the greater movei industry through the awards, 
 # Data Model
 
 Explanation of Data Model
+This data model represents a movie database with several interrelated entities, each storing specific information about movies, actors, reviews, and other relevant details. Here's a breakdown of the main components:
+Movie: This is the central entity, which stores basic information about movies, including the title, release year, rating, duration, and links to related entities like director, studio, and genre.
+Actor: This entity holds information about actors, including their name, gender, and date of birth. It is linked to the movie table through the movie_Actor table, establishing a many-to-many relationship (i.e., an actor can appear in multiple movies, and a movie can have multiple actors).
+Genre: This table defines different genres (e.g., Sci-Fi, Drama). Each movie can be associated with one genre through the idgenre foreign key in the movie table, establishing a one-to-many relationship (i.e., a genre can have multiple movies, but each movie has only one genre).
+Director: This table stores information about directors, including their name, nationality, birthdate, and the number of awards won. Each movie is linked to one director, establishing a one-to-many relationship (i.e., a director can direct multiple movies).
+Studio: This table represents the production studio that produced the movie. It contains details like the studio's name, location, and the number of movies produced. Each movie is linked to one studio.
+Movie_Screening: This table stores details about individual movie screenings, including the theater location, date, time, and ticket sales. Each screening is linked to a specific movie, creating a one-to-many relationship between movies and screenings.
+Box Office: This table tracks box office performance, including revenue, region, and tickets sold. Each record is linked to a specific movie, reflecting how a movie performed in different regions.
+Review: This table stores user reviews, including the review score, the reviewer’s name, and their comments. Each review is linked to both a movie and a customer (the reviewer).
+Customer: This table stores customer information such as their name, email address, and membership status. Customers are linked to the review table, meaning each customer can submit reviews for multiple movies.
+Awards: This table tracks awards that movies or actors have won, including the award name, the role of the person (e.g., Best Director), and the quantity. It is linked to both the movie and actor tables.
+
 ![Project 1 Data Model- FINAL](https://github.com/user-attachments/assets/ee82cecb-57c7-4d58-bca4-99f0471aa410)
 
 # Data Dictionary
