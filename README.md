@@ -1,4 +1,4 @@
-# Querey Works MIST 4610 Project 1
+# Query Works MIST 4610 Project 1
 
 
 
