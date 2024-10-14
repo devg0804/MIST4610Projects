@@ -11,8 +11,8 @@
 5. Brooke Soto [@3rooke15](https://github.com/3rooke15)
 
 # Problem Description
-The problem we tackled was to build a data model to store and sort movie data better than conventional options available on the web. The core of the model is the movei class, which represents each unique film within the database that a customer may watch. 
-The moveie class is connected to the greater movei industry through the awards, box_office, movei_screening, director, and studio entities. The consumer side is represented by reviews, genre, and movie_screening. Rather than rely on ad cluttered sites like IMDB, we sought to build a more useful way for customers and directors to get the movie data they need exactly how they want it.
+The problem we tackled was to build a data model to store and sort movie data better than conventional options available on the web. The core of the model is the movie class, which represents each unique film within the database that a customer may watch. 
+The movie class is connected to the greater movie industry through the awards, box_office, movie_screening, director, and studio entities. The consumer side is represented by reviews, genre, and movie_screening. Rather than rely on ad-cluttered sites like IMDB, we sought to build a more useful way for customers and directors to get the movie data they need exactly how they want it.
 
 # Data Model
 
